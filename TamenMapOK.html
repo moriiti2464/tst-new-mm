@@ -1,0 +1,2240 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Main </title>
+
+<style>
+
+	@media screen {
+	  body {
+		background: #eee;}
+		.sheet {
+		    background: white; /* 背景を白く */
+		    margin-top: 4mm;}       /* margin: 1mm;*/
+		.container {max-width: 100%;}
+
+
+	}
+
+      [v-cloak] {
+        display: none /* テンプレートの{{}}を非表示にする 550px*/
+      }
+
+		.overlay {
+		    background: rgba(0, 0, 0, .6);
+		    position: fixed;
+		    width: 100%;
+		    height: 100%;
+		    left: 0;
+		    top: 0;
+		    right: 0;
+		    bottom: 0;
+		    z-index: 800;
+		    overflow: hidden;
+		    display: flex;
+		    align-items: center;
+		    justify-content: center;
+		}
+
+	  .overlay li {
+		    border-top: dotted 2px #bdb76b;
+		    list-style: none;
+		    width: auto;
+		    line-height: 20px;
+		    padding: 5px 10px;
+		    color: #000080;
+		    background-color: #add8e6;
+	 	}
+
+		.panel01 {
+		    height: auto;
+		    width: auto;
+		    padding: 10px;
+		    background-color: #fff;}
+
+		.panel01-mobile {
+		    height: auto;
+			width: 70%;
+		    padding: 10px;
+			background-color: #fff;}
+
+		.scroll-box {
+	         height: auto;
+	         max-height: 500px;
+	         overflow-x: hidden;}
+
+		.event-scroll-box {
+	         height: auto;
+	         max-height: 300px;
+	         overflow-x: hidden;}
+
+		.input_size{
+			font-size:0.8rem;
+		}
+		.input_size_title{
+			font-size:1.2rem;
+		}
+
+		.table_sticky {
+		    display: block;
+		    overflow-y: scroll;
+		    height: calc(67%);
+		    height: -webkit-calc(100vh / calc(2 / 3));
+		    height: calc(100vh / calc(2 / 3));
+		    //height: calc(100vh / 2);
+		    border:1px solid;
+		    border-collapse: collapse;
+		}
+
+		.table_sticky thead th {
+		    position: sticky;
+		    top: 0;
+		    z-index: 1;
+		    background:#ffe4e1;
+		    border-top:#FFFFFF;
+		}
+
+		.panelbtn_toziru {
+			    width: 100%;
+			    padding: 2px;
+			    border: none;
+			    background: #c0c0c0;}
+
+		.target li {
+		  transition: background-color .5s;
+		}
+
+		.target li:hover {
+		  background-color: #0f0;
+		  transition: background-color 400ms;
+		}
+
+	    th > div {
+	      		cursor: pointer;
+	    }
+
+		th > div:hover {
+				background-color: #0f0;
+				transition: background-color 400ms;
+			    display: inline;
+		}
+
+		.itilan_list{
+					background-color:#ffff00;
+		}
+
+		.sousa_kensaku {line-height: 40px;}
+
+		.add_name li{
+		  float: left;
+		  list-style: none;
+		  line-height: 25px;
+		}
+
+		.hutozi{
+			font-weight:bold;
+		}
+
+		.in-background{
+			background-color:#87ceeb;
+		}
+
+
+		.map {z-index:0;
+			height: 400px }    /* 500 */
+
+	  	.annai {
+		 }
+
+		.rireki-table {
+		    	//display: block;
+		    	overflow-y: scroll;
+		    	height: auto;
+		    	max-height: 600px;	
+		}
+
+	  @media (max-width: 576px) {
+			.overlay {background: rgba(0, 0, 0, 0.4 );}
+			.overlay li {line-height: 50px;}
+
+			.panel01 {height:auto;}
+
+	  .overlay li {
+		    border-top: dotted 2px #bdb76b;
+		    list-style: none;
+		    width: auto;
+		    line-height: 40px;
+		    padding: 5px 10px;
+		    color: #000080;
+		    background-color: #add8e6;
+	 	}
+
+			.scroll-box {max-height: 400px;}
+
+			.input_size{font-size:0.6rem;}
+			.input_size_title{font-size:0.6rem;}
+
+		   tr {
+				max-height: 30px;
+		      	height:20px;
+		    }
+
+		.hutozi{
+			font-weight:bold;
+			font-size:0.8rem;
+		}
+
+			.sousa_kensaku {line-height: 50px;}
+
+			.map {z-index:0;
+					height: 300px }
+
+			.annai {
+				width: 300px;
+			 }
+
+		.rireki-table {
+		    	//display: block;
+		    	overflow-y: scroll;
+		    	height: auto;
+		    	max-height: 400px;	
+		}
+
+	  }
+
+</style>
+
+</head>
+<body>
+
+<div class="container" id="app">
+  	<div v-cloak><!--初期画面の非表示のため	-->
+			<div class = "sticky-top d-print-none" style = "height:45px; background-color:#808000;">
+
+			        <ul class="list-inlinetarget">
+			          <li class="list-inline-item">
+			      		<span style="color:white;font-size:80%;">
+								{{data.Nav_title}}</span></li>
+			          <li class="list-inline-item">
+							<button class="btn btn-info dropdown-toggle" type="button" id="dropdownMenuButton02" 
+									data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">        <!--	4.0 data-toggle="dropdown"	⇒	5.0 data-bs-toggle="dropdown"-->
+										<i class="fas fa-file-alt" style="color:white;font-size: 80%;"></i>
+											&nbsp;メニュー</button>
+							<div class="dropdown-menu sousa_kensaku" aria-labelledby="dropdownMenuButton02">
+									<div class="list-group" v-for = '(item,idx) in data.menyu_names'>
+											<button type="button" class="dropdown-item list-group-item-success list-group-item-action mb-2" @click="doing_select(idx)">
+											<i class="fas fa-file-alt" style="color:#800000;font-size: 100%;"></i>{{idx}}:&nbsp;&nbsp;&nbsp;{{item}}表示</span>	
+									</div>
+
+											<button type="button" class="dropdown-item list-group-item-warning list-group-item-action mb-2" @click="sousa_annai()">
+											<i class="fas fa-file-alt" style="color:#800000;font-size: 100%;"></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;操作案内</span>	
+
+							</div>
+			          </li>
+			        </ul>
+			</div><!--	終了-->
+
+				<div v-show="data.DispVal =='TOP画面'" class="w-100">
+							<div style = "background-color:#add8e6;">
+
+								<template v-if="!data.Kousin_flg">
+									<h6 class="print_title">&nbsp;&nbsp;登録表 
+										<small>（{{data.KumiaiName}}）&nbsp;&nbsp;<button type="button" class="btn btn-warning btn-sm d-print-none" 
+												@click="local_save">データ保存</button></small>
+									</h6>
+								</template>
+								<template v-else>
+									<h6 class="print_title">&nbsp;&nbsp;登録表 
+										<small>（{{data.KumiaiName}}）&nbsp;&nbsp;<button type="button" class="btn btn-danger btn-sm d-print-none" 
+												@click="local_save">データ更新</button></small>
+									</h6>
+								</template>
+
+							</div>
+
+						<section class="d-flex frex-row mt-2">
+							<div class="ml-4">
+								<h6 class="hutozi">1.業務内容の選択<h6>
+								<select v-model.trim='data.select_json["内容"]' class="in-background">
+									<option value="実践活動">実践活動</option>
+							        	<option value="研修・会議">研修・会議</option>
+							        	<option value="啓発普及">啓発普及</option>
+								</select>
+							</div>
+
+							<!--作業日-->
+							<div class="ml-5">
+							    <h6 class="hutozi">&nbsp;&nbsp;&nbsp;&nbsp;2.作業日</h6>
+							        &nbsp;&nbsp;&nbsp;&nbsp;<input type="date" placeholder="作業日をお選びください。" v-model='data.select_json["日付"]' class="in-background">
+							</div>
+						</section>
+
+						<section class="d-flex frex-row mt-2"><!-- 横並び	-->
+							    <h6 class="hutozi">3.開始時</h6>&nbsp;&nbsp;
+									<select v-model='data.select_json["始時"]' class="in-background"> 
+										<option v-for = "item in data.time_starts"
+											v-bind:value = "item" v-bind:key = "item">
+											{{item}}
+										</option>
+									</select> 
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+							    <h6 class="hutozi">4.終了時</h6>&nbsp;&nbsp;
+									<select v-model='data.select_json["終時"]' class="in-background"> 
+										<option v-for = "item in data.time_ends"
+											v-bind:value = "item" v-bind:key = "item">
+											{{item}}
+										</option>
+									</select> 
+						</section>
+
+
+					<section class="ml-4 mt-4">
+
+				
+								<button type="button" class="btn btn-warning btn-sm ml-4 mb-2" @click="diaplay_name">
+									◆会員リストの表示</button>
+				<h6 class="hutozi in-background">5.作業者をクリックし、登録して下さい。&nbsp;&nbsp;&nbsp;</h6>
+							<div v-if="data.Namelist_flg" class="mb-1">
+									<ul class="add_name">
+									  <li v-for="name in data.names" :key="name" @click="add_name(name)" class="mr-3" style="font-size:1rem;">
+									    &nbsp;&nbsp;&nbsp;&nbsp;○&nbsp;{{name }}
+									  </li>
+									</ul>  <br>
+									<div class="w-100" style="clear:both;"></div><br>
+
+									<div class="ml-5">
+											<h6 class="text-primary"> 5-1.作業者リストです。.....削除は x ボタンのクリック</h6>
+											<li v-for="(new_name,index)  in data.new_names" v-bind:key ="index" class="list-group-item" style="height:40px;font-size:0.8rem;">
+												  {{ index + 1  + '.' + new_name}} 
+												  <span  class="float-end"><button type="button" class="close" @click="remove_name(index)">
+												    <span style="font-size:1rem;" class="float-end">&times;</span>
+												  </button> </span>
+											</li>
+									</div>
+
+							</div>
+
+
+					</section>
+
+					<!--貸出機-->
+					<section class="ml-4 mt-4">
+						<div style="">
+							<h6 class="hutozi"> 6.貸出機の選択</h6>
+								<ul class="">
+						          <li class="list-inline-item">
+									<a href="#" @click="select_kasidasiki('草刈機'); return false;">○草刈機</a></li>
+						          <li class="list-inline-item">
+									<a href="#" @click="select_kasidasiki('軽トラック'); return false;">○軽トラック</a></li>
+						          <li class="list-inline-item">
+									<a href="#" @click="select_kasidasiki('チェンソー'); return false;">○チェンソー</a></li>
+						        </ul>
+						</div>
+
+						<div v-if="data.Kasidasilist_flg"  style="">
+							<h6 class="hutozi">6-1.貸出者リストです。.....削除は x ボタンのクリック</h6>
+							<div class="ml-5">
+								<li v-for="(item,idx)  in data.kasidasi_retu"  v-bind:key = "idx" class="list-group-item" style="height:40px;font-size:0.8rem;">
+									  {{ idx + 1  + '.' + item["人"] + '---' + item["内容"]}}  
+									  <span  class="float-end"><button type="button" class="close" @click="remove_kasidasi(idx)">
+									    <span style="font-size:1rem;">&times;</span>
+									  </button> </span>
+								</li>
+							</div>
+						</div>
+					</section>
+
+					<!--その他-->
+					<section class="ml-4 mt-4">
+						<div class="">
+							<h6 class="hutozi"> 7.その他の選択</h6>
+								<ul class="">
+						          <li class="list-inline-item">
+									<a href="#" @click="select_hoka('事務処理'); return false;">○事務処理</a></li>
+						          <li class="list-inline-item">
+									<a href="#" @click="select_hoka('お茶代'); return false;">○お茶代</a></li>
+						          <li class="list-inline-item">
+									<a href="#" @click="select_hoka('文具費'); return false;">○文具費</a></li>
+						        </ul>
+						</div>
+
+						<div v-if="data.Hokalist_flg"  style="">
+							<h6 class="hutozi">7-1.その他リストです。.....削除は x ボタンのクリック</h6>
+							<div class="ml-5">
+								<li v-for="(item,idx)  in data.hoka_retu"  v-bind:key = "idx" class="list-group-item" style="height:40px;font-size:0.8rem">
+									  {{ idx + 1  + '.' + item["人"] + '---' + item["内容"] + '---' + item["日付"] + '---' + item["始時"] + '---' + item["終時"] + '---' + String(Number(item["金額"])).replace( /(\d)(?=(\d\d\d)+(?!\d))/g, '$1,' )}} 
+									  <span  class="float-end"><button type="button" class="close" @click="remove_hoka(idx)">
+									    <span style="font-size:1rem;">&times;</span>
+									  </button> </span>
+								</li>
+							</div>
+						</div>
+					</section>
+
+						<!--写真の取込-->
+					<div class="ml-4 mt-4">
+						<div style="">
+						    <h6 class="hutozi">8.作業写真の取込</h6>
+								<button type="button" class="btn btn-primary btn-sm ml-4" @click="ph_in_map_Modal()">
+									<span class="input_size"><i class="fa fa-camera"></i>&nbsp;&nbsp;写真登録</span></button>
+						</div>
+
+					<!--登録済の写真があれば、表示-->
+						<template v-if="data.select_json['写真']">
+							<div class="ml-2">
+									<div v-for="(dat,index) in data.select_json['写真']" v-bind:key="index">
+											<div class="card" style = "float:left;width:30%;">
+												<img :src="dat['url']" class="">
+												<div class="">
+													<p class="input_size">◆登録No:&nbsp;{{index}}</p>
+													<span @click="ph_sakuzyo(index)" class="text-danger" style="cursor: pointer;font-size:0.8rem;"> &nbsp;◆写真削除</span>
+													<p class="input_size">◆コメント：<input type="text" v-model="dat.phcoment"></p>
+												</div>
+											</div> 
+									</div><!-- 終了v-for-->
+							</div><!--  class="ml-2"	-->
+							<div class="w-100" style="clear:both;"></div>
+						</template>
+					</div>
+
+					<div class="ml-4 mt-4">
+						<div class="">
+						    <h6 class="hutozi">9.作業履歴の一覧表の表示</h6>
+								<button type="button" class="btn btn-primary btn-sm ml-4" @click="event_list_disp">
+									<span class="input_size">◆作業履歴の表示</span></button>&nbsp;&nbsp;&nbsp;&nbsp;
+						</div>
+					</div>
+
+
+						<!--アコーディオン-->
+						<div v-show = "data.Disp_event_flg == true">
+							<div class="ml-4 mt-2 w-100">
+								<div class="event-panel">
+									<span style="font-weight:bold;color: #ff0000;">&nbsp;&nbsp;期間:&nbsp;&nbsp;件数:{{data.All_event_filter.length}}</span>
+									<div class="mt-1 ml-3">
+										<div><span style="font-size:0.8rem">
+											<button type="button"><span class="input_size">更新</span></button> ボタン クリックで呼び出し、削除は x ボタンのクリック）</span>
+										</div>
+									</div><!--終了d-flex frex-row	-->
+
+								<table class="table table-sm table-striped table-hover table_sticky">	<!-- scroll	-->
+									<thead>
+										<tr	style = "font-size:0.8rem">
+											<th >&nbsp;&nbsp;NO　</th>
+											<th >&nbsp;&nbsp;作業日　</th>
+											<th >&nbsp;&nbsp;始時　</th>
+											<th >&nbsp;&nbsp;終時　</th>
+											<th >&nbsp;&nbsp;内容　</th>
+											<th >&nbsp;&nbsp;</th>
+											<th >&nbsp;&nbsp;</th>
+										</tr>
+									</thead>
+									<tbody class="rireki-table">
+											<tr v-for="(item,idx) in data.All_event_filter" v-bind:key ="idx" style = "font-size:0.8rem">
+												<td >{{idx}}</td><!--	1列目	-->
+												<td>{{item["日付"]}}</td>
+												<td>{{item["始時"]}}</td>
+												<td>{{item["終時"]}}</td>
+												<td>{{item["内容"]}}</td><!--	5列目	-->
+													
+												<td><button type="button" v-on:click="kousin_event(item,idx)" class="in-background"><span class="input_size">更新</span></button></td><!--	6列目	-->
+												<td><button type="button" v-on:click="sakuzyo_event(item,idx)"><span class="input_size">&nbsp;&nbsp; x &nbsp;&nbsp;</span></button></td><!--	7列目	-->
+										</tr>
+									</tbody>
+								</table>
+								</div><!--終了 class="event-panel"	-->
+							</div><!--終了　 class="w-100"	--> 
+						</div> <!--終了　 v-if="data.Disp_event_flg"	--> 
+
+
+
+				</div><!--終了　data.DispVal =='TOP画面'	-->
+
+
+				<div v-show="data.DispVal =='日報印刷画面'" class="w-100 mt-3">
+					<div class="sheet">
+
+							<h6 class="print_title">&nbsp;&nbsp;作業日報 
+								<small>（{{data.KumiaiName}}）&nbsp;&nbsp;</small>
+							</h6>
+
+
+
+						<section>
+							<div class="table-responsive">
+						 		<table class='table table-bordered table-striped table-condensed' id="hozyou_touroku">
+									<tr>
+									<td class = "tbl_fontsize">目的：</td>
+									<td style="font-weight:bold;font-size:1em;"><span class = "Mokutekiname"> 農地維持/資源向上活動 </span> </td>
+									<td class = "tbl_fontsize">業務内容：</td>
+									<td style="font-weight:bold;font-size:1em;"><span class = "Naiyouname"> {{data.select_json["内容"]}}</span> </td>
+									</tr>
+									<tr>
+									<td class = "tbl_fontsize">作業日：</td>
+									<td style="font-weight:bold;font-size:1em;"><span class = "Startdatename">{{data.select_json["日付"]}} </span> </td>
+									<td class = "tbl_fontsize">始時間(共通)：</td>
+									<td style="font-weight:bold;font-size:1em;"><span class = "Starttimename"> {{data.select_json["始時"]}}</span> </td>
+									<td class = "tbl_fontsize">終時間(共通)：</td>
+									<td style="font-weight:bold;font-size:1em;"><span class = "Endtimename"></span>{{data.select_json["終時"]}} </td>
+									</tr>
+						 		</table>
+							</div>
+						</section>
+
+						<section>
+							<div class='table-responsive'>
+								<table class='table table-bordered table-hover table-condensed'>
+									<caption style='text-align:left;background-color: darkseagreen;'>作業者一覧：</caption>
+								<thead style='font-size:10px;'>
+									<th >NO</th><th >作業者</th>
+									<th v-for="(item,idx) in data.worker_naiyos" v-bind:key ="idx" scope="col" class="mouse"> 
+										{{item}}
+									</th><th >日当</th>
+								</thead>
+								<tbody>
+									<tr style="height:30px;font-size:10px;" v-for='(item,idx) in data.select_json["人"]' v-bind:key ="idx"> 
+										<td >&nbsp; {{idx + 1}} </td>
+										<td >&nbsp; {{data.select_json["人"][idx]}} </td>
+										<td v-for="(rec,idx02) in data.worker_naiyos" v-bind:key ="idx02" >
+											&nbsp; <span style="">{{data.select_json[rec]}} </span>
+										</td> 
+										<td class="text-end">&nbsp; {{String(Number(data.tanka_nittou*parseFloat(data.select_json["時間"]))).replace( /(\d)(?=(\d\d\d)+(?!\d))/g, '$1,' )}} </td>
+									</tr>
+								</tbody>
+								<tfoot>
+									<tr>
+										<td class = "rezi_su" style='font-size:0.9em;font-weight:bold;'> 総人数：{{data.select_json["人"].length}}</td>
+										<td></td>
+										<td></td>
+									</tr>
+								</tfoot></table>
+							</div>
+						</section>
+
+							<template v-if="data.select_json['貸出機']">
+								<section>
+									<div class='table-responsive'>
+										<table class='table table-bordered table-hover table-condensed'>
+											<caption style='text-align:left;background-color: darkseagreen;'>貸出機一覧：</caption>
+										<thead style='font-size:10px;'>
+											<th >NO</th>
+											<th v-for="(item,idx10) in data.kasidasi_naiyos" v-bind:key ="idx10" scope="col" class="mouse"> 
+												{{item}}
+											</th>
+										</thead>
+										<tbody>
+											<tr style="height:30px;font-size:10px;" v-for="(rec,idx12) in data.kasidasi_retu" v-bind:key ="idx12"> 
+												<td >&nbsp; {{idx12 + 1}} </td>
+												<td >&nbsp; {{rec["人"]}} </td>
+												<td >&nbsp; {{rec["内容"]}} </td>
+												<td >&nbsp; {{rec["分類"]}} </td>
+												<td >&nbsp; {{data.select_json["日付"]}} </td>
+												<td >&nbsp; {{data.select_json["始時"]}} </td>
+												<td >&nbsp; {{data.select_json["終時"]}} </td>
+												<td class="text-end">&nbsp; {{String(Number(rec['金額'])).replace( /(\d)(?=(\d\d\d)+(?!\d))/g, '$1,' )}} </td>
+											</tr>
+										</tbody>
+										<tfoot>
+											<tr>
+												<td class = "rezi_su" style='font-size:0.9em;font-weight:bold;'> 総貸出数：{{data.kasidasi_retu.length}}</td>
+												<td></td>
+												<td></td>
+											</tr>
+										</tfoot></table>
+									</div>
+								</section>
+							</template>
+
+							<template v-if="data.select_json['その他']">
+								<section>
+									<div class='table-responsive'>
+										<table class='table table-bordered table-hover table-condensed'>
+											<caption style='text-align:left;background-color: darkseagreen;'>その他一覧：</caption>
+										<thead style='font-size:10px;'>
+											<th >NO</th>
+											<th v-for="(item,idx10) in data.hoka_naiyos" v-bind:key ="idx10" scope="col" class="mouse"> 
+												{{item}}
+											</th>
+										</thead>
+										<tbody>
+											<tr style="height:30px;font-size:10px;" v-for="(rec,idx12) in data.hoka_retu" v-bind:key ="idx12"> 
+												<td >&nbsp; {{idx12 + 1}} </td>
+												<td >&nbsp; {{rec["人"]}} </td>
+												<td >&nbsp; {{rec["内容"]}} </td>
+												<td >&nbsp; {{rec["分類"]}} </td>
+												<td >&nbsp; {{rec["日付"]}} </td>
+												<td >&nbsp; {{rec["始時"]}} </td>
+												<td >&nbsp; {{rec["終時"]}} </td>
+												<td  class="text-end">&nbsp; {{String(Number(rec['金額'])).replace( /(\d)(?=(\d\d\d)+(?!\d))/g, '$1,' )}}</td>
+											</tr>
+										</tbody>
+										</table>
+									</div>
+								</section>
+							</template>
+					</div>   <!--  終了class="sheet"-->
+
+				<div class="sheet mt-3">  <!-- -->
+					<div v-show="(data.select_json['写真'].length>0)">  <!-- 配列の[]は、０を返す    -->
+					<!-- <div v-show="(_.size(data.select_json['写真'])>0)">  _.size()、オブジェクトの項目数を返す -->
+							<section>
+								<caption style='text-align:left;background-color: darkseagreen;'>&nbsp;&nbsp;作業位置：</caption>
+								<span style="height:20px;color:#000000;font-size:60%;">※&nbsp;
+								手動設定Icon<img src="ICONS/Green.png" style = "width:30px; height=auto" class="img-fluid">
+								&nbsp;自動GPS取得Icon<img src="ICONS/Maroon.png"  style = "width:30px; height=auto" class=""> </span>
+								
+								<div class="map" id="map"></div>
+							</section>
+					</div>
+
+					<template v-if="data.select_json['写真'].length>0">
+						<section>
+							<label>&nbsp;&nbsp;作業写真等の一覧</label>
+								<div v-for="(item,index) in data.select_json['写真']" v-bind:key="index">
+									<div class="card" style = "float:left;width:33%;">    <!-- 終了 style = "float:left;width:47%;"-->
+												<template v-if="Ph_kousin_flg">
+													      <img :src="item.phpath" class="img-fluid card-img-top">
+												</template>
+												<template v-else>
+													      <img :src="item.url" class="img-fluid card-img-top">
+												</template>
+
+												<div class="card-body input_size">  <!-- class="card-body"	card-img-overlay	-->
+														<div class="bg-light">登録NO:&nbsp; {{index}} </div>
+														<input type="text" v-model="item.phcoment">
+														<p class="bg-info d-print-none mt-2"><span v-on:click="ph_sakuzyo(index)" class="text-danger"> &nbsp;◆写真の削除</span></p>
+		 										</div>
+										</div><!-- 終了class="card"-->
+								</div>		<!-- 終了	"v-for"	-->
+							<div class="w-100" style="clear:both;"></div>
+						</section>
+					</template>
+					</div>  <!-- 終了class="sheet""-->
+				</div><!--  	終了　data.DispVal =='日報印刷画面'	-->
+
+				<div v-if="data.DispVal =='支払印刷画面'" class="w-100 sheet mt-3">
+					<div class="w-100">
+						<div class="event-panel">
+							<h6 class="print_title">作業者別 支払一覧　明細表
+								<small>（{{data.KumiaiName}}）&nbsp;&nbsp;<button type="button" class="btn btn-warning btn-sm d-print-none" @click="siharai_excel_save">支払いデータのexcel保存</button></small></small>
+							</h6>
+
+										<span style="font-weight:bold;" class="ml-5">&nbsp;&nbsp;明細件数:{{data.pay_list.length}}&nbsp;件</span>
+										<div class="row" style = "font-size:0.8rem">
+												<div class="col-2">&nbsp;&nbsp;名　　前</div>
+												<div class="col-2">&nbsp;&nbsp;日　　付</div>
+												<div class="col-2">&nbsp;&nbsp;作業時間</div>
+												<div class="col-2">&nbsp;&nbsp;分　　類</div>
+												<div class="col-2">&nbsp;&nbsp;内　　容</div>
+												<div class="col-2">&nbsp;&nbsp;金　　額</div>
+										</div>
+										<div class="">     <!--	event-scroll-box	-->
+												<ul class="list-group target">
+													<li style = "line-height:100%;font-size:0.8rem" class="list-group-item" v-for="(item,idx) in data.pay_list" v-bind:key ="idx">
+														<div class="row">
+															<div class="col-2">{{item["人"]}}</div><!--	1列目	-->
+															<div class="col-2">{{item["日付"]}}</div><!--	2列目	-->
+															<div class="col-2">{{item["時間"]}}</div><!--	3列目	-->
+															<div class="col-2">{{item["分類"]}}</div><!--	4列目	-->
+															<div class="col-2">{{item["内容"]}}</div> <!--	5列目	-->
+															<div class="col-2 text-end">{{String(Number(item['金額'])).replace( /(\d)(?=(\d\d\d)+(?!\d))/g, '$1,' )}}</div>  <!--	6列目	-->
+														</div>
+													</li>
+												</ul>
+
+										<div class="row" style = "font-size:1rem;border: 0.5px solid;">
+												<div class="col-2">&nbsp;&nbsp;</div>
+												<div class="col-2">&nbsp;&nbsp;</div>
+												<div class="col-2">&nbsp;&nbsp;</div>
+												<div class="col-2 text-left" style="font-weight:bold;">&nbsp;&nbsp;合　計</div>
+												<div class="col-2">&nbsp;&nbsp;</div>
+												<div class="col-2 text-center" style="font-weight:bold;">&nbsp;&nbsp;{{String(Number(data.All_pay)).replace( /(\d)(?=(\d\d\d)+(?!\d))/g, '$1,' )}}&nbsp;円</div>
+												<!--	<div class="col-2">&nbsp;&nbsp;{{data.pay_list.reduce(function (sum,item){return parseInt(sum) + parseInt(item["金額"])},0)}}</div>	-->
+										</div>
+
+										<div class="row" style = "font-size:0.8rem;background-color: #ffffff;">&nbsp;&nbsp;
+										</div>
+
+										<div class="row" style = "font-size:1rem;border: 0.5px solid;background-color: #ffffff;">
+												<div class="col-2">&nbsp;&nbsp;</div>
+												<div class="col-2">&nbsp;&nbsp;振込件数</div>
+												<div class="col-2">{{data.furikomi_su}}&nbsp;件</div>
+												<div class="col-2 text-left" style = "font-size:0.8rem">&nbsp;&nbsp;振込単価&nbsp;{{data.furikomi_tanka}}&nbsp;円</div>
+												<div class="col-2">&nbsp;&nbsp;</div>
+												<div class="col-2 text-center" style="">&nbsp;&nbsp;{{String(Number(data.furikomi_tanka*data.furikomi_su)).replace( /(\d)(?=(\d\d\d)+(?!\d))/g, '$1,' )}}&nbsp;円</div>
+										</div>
+
+										<div class="row" style = "font-size:0.8rem;background-color: #ffffff;">&nbsp;&nbsp;
+										</div>
+
+										<div class="row" style = "font-size:1rem;border: 1.5px solid;">
+												<div class="col-2">&nbsp;&nbsp;</div>
+												<div class="col-2">&nbsp;&nbsp;</div>
+												<div class="col-2">&nbsp;&nbsp;</div>
+												<div class="col-2 text-left" style="font-weight:bold;">&nbsp;&nbsp;振込額 </div>
+												<div class="col-2" style = "font-size:0.7rem">（除く振込手数料）</div>
+												<div class="col-2 text-center" style="font-weight:bold;">&nbsp;&nbsp;{{String(Number(data.All_pay)).replace( /(\d)(?=(\d\d\d)+(?!\d))/g, '$1,' )}}&nbsp;円</div>
+										</div>
+
+									</div> <!--	終了 class="scroll-box"	-->
+								</div><!--終了　イベント表示	-->
+					</div><!--終了　 class="w-100"	--> 
+				</div><!--終了　data.DispVal =='支払印刷画面'		-->
+
+						<!--　下記の<transition name="modal" >はモーダル画面の設定		-->
+							<transition name="modal" v-if="data.KasidasikiMan_flg" style=""><!--		-->
+								<div class="overlay" @click="data.KasidasikiMan_flg = false">
+									<div class="panel01" @click.stop>
+									     <h6>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;6-2 貸出機提供者の選択</h6>
+										<div class="scroll-box target">
+											<li v-for="(item,idx) in data.new_names" v-bind:key="idx" @click="kasidasikiman_select(item)" style="height:30px;font-size:12px;">
+												{{item}}
+											</li></div>
+									 </div>
+								</div>
+							</transition>
+
+							<transition name="modal" v-if="data.pre_hoka_retu_zimu_flg" style=""><!--		-->
+								<div class="overlay" @click="data.pre_hoka_retu_zimu_flg = false">
+									<div class="panel01" @click.stop>
+										<div class="">
+										    <h6>事務処理作業日</h6>
+										     <input type="date" placeholder="事務処理作業日をお選びください。" v-model='data.pre_hoka_retu["日付"]'>
+										</div>
+										<div class="d-flex frex-row mt-2"><!-- 横並び	-->
+										    <h6>開始時</h6>&nbsp;&nbsp;&nbsp;&nbsp;
+												<select v-model='data.pre_hoka_retu["始時"]'> 
+													<option v-for = "item in data.time_starts"
+														v-bind:value = "item" v-bind:key = "item">
+														{{item}}
+													</option>
+												</select> 
+											&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+										    <h6>終了時</h6>&nbsp;&nbsp;&nbsp;&nbsp;
+												<select v-model='data.pre_hoka_retu["終時"]'> 
+													<option v-for = "item in data.time_ends"
+														v-bind:value = "item" v-bind:key = "item">
+														{{item}}
+													</option>
+												</select> 
+										</div>
+										<div><!-- 	-->
+										 	<h6 class="mt-2">事務処理作業者の選択</h6>
+											<div class="scroll-box target">
+												<li v-for="(item,idx) in data.Names_org" v-bind:key="idx" @click="hokaman_select_zimu(item)" style="height:30px;font-size:12px;">
+													{{item}}
+												</li></div>
+										</div>
+									</div>
+								</div>
+							</transition>
+
+							<transition name="modal" v-if="data.pre_hoka_retu_tea_flg" style=""><!--		-->
+								<div class="overlay" @click="data.pre_hoka_retu_tea_flg = false">
+									<div class="panel01" @click.stop>
+										<div class="">
+										    <h6>お茶代</h6>
+										        <input type="number" placeholder="お茶代を記入して下さい。" v-model='data.pre_hoka_retu["金額"]'>
+										</div>
+										 <h6 class="mt-4">お茶代提供者の選択</h6>
+										<div class="scroll-box target">
+												<li v-for="(item,idx) in data.Names_org" v-bind:key="idx" @click="hokaman_select(item)" style="height:30px;font-size:12px;">
+													{{item}}
+												</li></div>
+									</div>
+								</div>
+							</transition>
+
+							<transition name="modal" v-if="data.pre_hoka_retu_bung_flg" style=""><!--		-->
+								<div class="overlay" @click="data.pre_hoka_retu_bung_flg = false">
+									<div class="panel01" @click.stop>
+										<!--その他文具費-->
+										<div class="">
+										    <h6>文具費</h6>
+										        <input type="number" placeholder="文具費を記入して下さい。" v-model='data.pre_hoka_retu["金額"]'>
+										</div>
+										 <h6 class="mt-4">文具費提供者の選択</h6>
+										<div class="scroll-box target">
+											<li v-for="(item,idx) in data.Names_org" v-bind:key="idx" @click="hokaman_select(item)" style="height:30px;font-size:12px;">
+												{{item}}
+											</li></div>
+									</div>
+								</div>
+							</transition>
+
+						<template v-if="data.Modal_sousa_annai_flg">
+		 					<transition><!--	操作案内	-->
+					            <div class="overlay" @click="data.Modal_sousa_annai_flg = false">
+									<div class="panel01" @click.stop>
+
+											<div class ="m-4 annai">
+
+											<div class ="mb-4" style = "background-color:#ffff00;">操作案内	&nbsp;&nbsp;&nbsp;&nbsp;※クリックで閉じる</div>
+												<div class ="event-scroll-box">
+													<table class="table table-sm table-striped">
+														<thead style='font-size:15px;'>
+															<th >項　目</th><th >操作内容</th><th >備考</th>
+														</thead>
+														<tbody>
+															<tr>
+																<td class="hutozi" >1.新規登録は、</td><td>1.業務内容の選択から7.登録写真の取込までを選択登録する</td><td class="hutozi" >1.から5.は必須登録です。</td>
+															</tr>
+															<tr>
+																<td class="hutozi" >2.日報印刷は、</td><td>操作区分の<span class="hutozi">日報印刷画面</span>を右clickして、表示された画面を印刷。</td><td>印刷物は、作業日報に綴る。</td>
+															</tr>
+															<tr>
+																<td class="hutozi" >3.支払印刷は、</td><td>操作区分の<span class="hutozi">支払印刷画面表示</span>を右clickして、表示された画面を印刷。</td><td>印刷物は、作業日報に綴る。</td>
+															</tr>
+															<tr>
+																<td class="hutozi" >4.保存は、</td><td><span class="hutozi">日報印刷画面</span>の上部のデータ保存（又は、データ更新）をclickする</td><td>作業履歴から呼び出せます。</td>
+															</tr>
+															<tr>
+																<td class="hutozi" >5.登録の訂正は、</td><td><span class="hutozi">TOP画面</span>の8.の作業履歴をclickし、次に作業履歴の表示をclickし、一覧表を表示する。</td><td>該当する作業日の作業の<span class="hutozi"> 更新ボタン</span>をclickして1.から訂正する。</td>
+															</tr>
+															<tr>
+																<td class="hutozi" >6.登録の削除は、</td><td><span class="hutozi">TOP画面</span>の8.の作業履歴をclickし、次に作業履歴の表示をclickし、一覧表を表示する。</td><td>削除する作業日の作業の<span class="hutozi"> ×ボタン</span>をclickすると削除される。</td>
+															</tr>
+															<tr>
+																<td class="hutozi" >7.振込処理は、</td><td><span class="hutozi">別作業</span>にて、ひな形の友末区【統一版】のExcelファイルを開き、<br>振り込み費をまとめる要請のため、 <br><span class="hutozi">１ｶ月内の作業者毎の金額（作業費、貸出費、事務費などの合計金額）</span>を登録する。<br>登録したExcelの印刷物、USBに保存したExcelデータを、保全会会長に渡す。</td>
+																		<td>会長は、振込金融機関に、<br>USB、印刷表、印鑑とともに<span class="hutozi">振り込み申請</span>する。<br>申請書、領収書の印刷物は、作業日報に綴る。</td>
+															</tr>
+														</tbody>
+													</table>
+												</div>
+										</div>    <!--	終了template 	-->
+
+									</div> <!--	終了class="panel01" 	-->
+					            </div>
+		 					</transition>
+						</template>
+
+						<template v-if="data.Modal_sousa_annai_insatu_flg">
+		 					<transition><!--	操作案内	-->
+					            <div class="overlay" @click="data.Modal_sousa_annai_insatu_flg = false">
+									<div class="panel01" @click.stop>
+											<div class ="m-4 annai">
+											<div class ="mb-4" style = "background-color:#ffff00;">日報印刷画面の操作	&nbsp;&nbsp;&nbsp;&nbsp;※クリックで閉じる</div>
+												<div class ="event-scroll-box">
+													<table class="table table-sm table-striped">
+														<thead style='font-size:15px;'>
+															<th >項　目</th><th >操作内容</th><th >備考</th>
+														</thead>
+														<tbody>
+															<tr>
+																<td class="hutozi" >1.この操作区分では、</td><td>1.作業データ保存と</td><td>　</td>
+															</tr>
+															<tr>
+																<td>　</td><td>2.作業位置のドラッグによる修正</td><td>が可能です。</td>
+															</tr>
+														</tbody>
+													</table>
+												</div>
+										</div>    <!--	終了template 	-->
+
+									</div> <!--	終了class="panel01" 	-->
+					            </div>
+		 					</transition>
+						</template>
+
+						<template v-if="data.Modal_sousa_annai_siharai_flg">
+		 					<transition><!--	操作案内	-->
+					            <div class="overlay" @click="data.Modal_sousa_annai_siharai_flg = false">
+									<div class="panel01" @click.stop>
+											<div class ="m-4 annai">
+											<div class ="mb-4" style = "background-color:#ffff00;">支払い印刷画面の操作	&nbsp;&nbsp;&nbsp;&nbsp;※クリックで閉じる</div>
+												<div class ="event-scroll-box">
+													<table class="table table-sm table-striped">
+														<thead style='font-size:15px;'>
+															<th >項　目</th><th >操作内容</th><th >備考</th>
+														</thead>
+														<tbody>
+															<tr>
+																<td class="hutozi">1.この操作区分では、</td><td>1.支払いデータの</td><td>Excel保存が可能です。<td>　</td>
+															</tr>
+														</tbody>
+													</table>
+												</div>
+										</div>    <!--	終了template 	-->
+
+									</div> <!--	終了class="panel01" 	-->
+					            </div>
+		 					</transition>
+						</template>
+
+						<template v-if="data.Modal_Photo_flg">
+							<transition name="modal"><!--	写真取り込み画面	-->
+								<div class="overlay" @click="data.Modal_Photo_flg = false">
+									<div class="panel01" @click.stop>
+								    <h5 class="mr-3">写真取り込み</h5>
+										<!--登録写真の選択-->
+										<div class="ml-1">
+											<div>
+										        <input
+										          id="file"
+										          ref="fileInput"
+										          type="file"
+										          accept="image/jpeg, .jpg, .jpeg"
+										          @change="attachImg">
+											</div>
+										</div>
+									    <!-- プレビュー -->
+										 <div class="col-auto mt-1">
+										      <img :src="data.resizedImg" class=""><!--	-->
+										 </div>
+										<div class = "btn-group m-3" role="group">
+											<button type="button" class="btn btn-info btn-sm" @click="ph_in_map_kakutei">取込み</button>
+											<button type="button" class="btn btn-secondary btn-sm" @click="close_Modal_Photo_flg">キャンセル</button>
+										</div>
+									</div>
+								</div>
+							</transition>
+						</template>
+
+
+							<!--取込み開始日-->
+						<template v-if="data.Modal_Event_kikan_flg">
+							<transition name="modal"><!--		-->
+								<div class="overlay" @click="data.Modal_Event_kikan_flg = false">
+									<div style = "width: 400px;height:200px;padding:10px; background-color:#fff;" @click.stop>
+									     <h6>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;取込み開始日の設定</h6>
+										<div class="mt-2">
+											<label>◆ &nbsp;&nbsp;&nbsp;取込み開始日</label>
+												<input type="date" placeholder="取込み開始日をお選びください。" v-model='data.startDate_str'>
+										</div>
+										<div class="mt-2">
+												<span v-on:click="close_event_kikan" class="text-danger step">◆ &nbsp;&nbsp;&nbsp;閉じる</span>
+										</div>
+									 </div>	
+								</div>
+							</transition>
+						</template>
+						<!--　モーダル画面の設定　の終了		-->
+
+  	</div><!---->
+  </div>  <!--終了  class="container"	 v-cloak	-->
+
+<!--リセットCSS -->
+<link rel="stylesheet" href="https://unpkg.com/sanitize.css">
+
+<!--<link rel="stylesheet" href="https://unpkg.com/papercss@1.8.3/dist/paper.min.css"> -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/paper-css/0.3.0/paper.css">
+
+   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+	<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+
+	<script src="https://unpkg.com/vue@3"></script>
+<!--
+	<script src="https://unpkg.com/vue-router@4"></script>
+	<script src="https://unpkg.com/vue@next"></script>
+-->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.12.0/underscore-min.js"></script>
+
+	<link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+	  integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+	  crossorigin=""/>
+	<script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+	  integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+	  crossorigin=""></script>
+
+	<script src="https://unpkg.com/xlsx/dist/xlsx.full.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/javascript-canvas-to-blob/3.28.0/js/canvas-to-blob.min.js"></script>
+	<script src="https://cdn.rawgit.com/blueimp/JavaScript-Load-Image/v2.6.2/js/load-image.all.min.js"></script>
+<!--
+  	<script src="./src/hiduke_Reiwa_settei.js"></script>
+-->
+	<script src="https://cdn.geolonia.com/community-geocoder.js"></script>  <!--住所から経緯度取得 -->
+
+
+	<script type="module">
+		import { initializeApp } from "https://www.gstatic.com/firebasejs/9.8.3/firebase-app.js";
+		import { getDatabase, ref, push, set, onChildAdded, remove, onChildRemoved,get,child } from "https://www.gstatic.com/firebasejs/9.8.3/firebase-database.js";
+
+		const firebaseConfig = {
+			  	apiKey: "AIzaSyCXnqMFh6aKeSMNuNUrLCHGSM7dxa-ZqIU",
+			    authDomain: "new-1922.firebaseapp.com",
+			    databaseURL: "https://new-1922-default-rtdb.firebaseio.com",
+			    projectId: "new-1922",
+			    storageBucket: "new-1922.appspot.com",
+			    messagingSenderId: "531280422931",
+			    appId: "1:531280422931:web:4f7fc8b747c715697137e6"
+			};
+
+		const app = initializeApp(firebaseConfig);//接続
+
+		const db  = getDatabase(app); //RealtimeDBに接続
+		const dbRef = ref(db); //RealtimeDBを使う
+
+		//終了	firebase ver9	設定
+
+		let obj = {};//汎用obj 宣言
+		let start_flg = true;//初回状態flg
+		let Total_event = [];//	
+		let All_Blob = [];//複数写真の素データ
+
+		// アイコンサイズの設定など
+		let LeafIcon = L.Icon.extend({
+				options: {
+					iconAnchor: [10, 41],
+					popupAnchor: [3, -40]
+				}
+		});
+
+		// 利用するアイコンの種類とURL 
+		let GreenIcon = new LeafIcon({iconUrl: 'ICONS/Green.png'});
+		let VioletIcon = new LeafIcon({iconUrl: 'ICONS/Violet.png'}) ;  
+		let BlueIcon = new LeafIcon({iconUrl: 'ICONS/Blue.png'}) ; 
+		let RedIcon = new LeafIcon({iconUrl: 'ICONS/Maroon.png'}) ; 
+		let OliveIcon = new LeafIcon({iconUrl: 'ICONS/Olive.png'}) ; 
+
+      Vue.createApp({
+		setup() {
+		  const data = Vue.reactive({	// Vue.
+
+			All_event_filter:[],//select_jsonの集まり	従来のAll_output_filterに相当する
+
+			//モーダル表示flg
+			Modal_Event_kikan_flg:false,
+			Modal_sousa_annai_flg:false,
+			Modal_sousa_annai_insatu_flg:false,
+			Modal_sousa_annai_siharai_flg:false,
+
+			Disp_event_flg:false,//アコーディオン開閉flg
+			Ph_kousin_flg:false,
+			Modal_Photo_flg:false,
+
+			Mobile_flg:false,	//モバイル端末なら true 、それ以外なら false を返す
+
+			//マスター関係 tamen 新規
+			furikomi_su:0,
+			furikomi_tanka:110,
+
+			tanka_nittou :1000,
+			tanka_keitora :750,
+			tanka_kasidasi :250,
+
+			Namelist_flg:false,
+			Kasidasilist_flg:false,
+			KasidasikiMan_flg:false,
+			Hokalist_flg:false,
+
+			//マスター関係	select_json
+			select_json : {
+				    "人": [],
+				    "内容": "",
+				    "分類": "日当",
+				    "日付": "",
+				    "始時": "",
+				    "終時": "",
+				    "時間": "",
+				    "貸出機": [],
+				    "写真": [],
+				    "その他": [],
+				    "Fkey": ""
+			},
+
+			// select_json ["写真"]の詳細
+			pre_ph_retu:{
+				"name":"?",
+				"phcoment":"?",
+				"Lat":"?",
+				"Lon":"?" ,
+				"exif_flg":false ,
+				"phpath":"?",
+				"url":"?",
+			    "Pkey": ""
+			},
+
+			Markers :[],
+
+			TikuName :"",
+			KumiaiName :"",
+
+			DispVal:'TOP画面',// 初期値登録	TOP画面	等
+
+			// 操作区分の設定
+			Doing_kubuns:[
+					{"id":0,"name":"TOP画面","dat":"abc","info":"登録/編集"},
+					{"id":1,"name":"日報印刷画面","dat":"abc","info":"日報印刷画面"},
+					{"id":2,"name":"支払印刷画面","dat":"abc","info":"支払印刷画面"}
+				],
+
+			menyu_names:[],
+
+			Names_org :[],
+			//Kouzas_org :[],
+			//Furiganas_org :[],
+
+			names:[],
+			new_names:[],
+			iti:"",
+			remove_name:"",
+
+			worker_naiyos:["内容","分類","日付","始時","終時"],
+
+			kasidasi_naiyos:["所有者","貸出機","分類","日付","始時","終時","金額"],
+			pre_kasidasi_retu:{"人":"","内容": "","分類": "","日付": "","始時": "","終時": "","金額": ""},
+			kasidasi_retu:[],
+
+			pre_hoka_retu:{"人":"","内容": "","分類": "","日付": "","始時": "","終時": "","金額": ""},	
+			hoka_retu:[],
+			hoka_naiyos:["人","内容","分類","日付","始時","終時","金額"],
+
+		  	pay_list:[],
+			All_pay:0,
+			//All_furikomi_filter:[],
+
+			time_starts:["07:00","07:30","08:00","08:30","09:00","09:30","10:00","10:30","11:00","11:30","12:00",
+							"12:30","13:00","13:30","14:00","14:30","15:00","15:30","16:00","16:30","17:00","17:30",
+							"18:00","18:30","19:00","19:30","20:00","20:30","21:00"],
+			time_start:"",
+			time_ends:["09:00","09:30","10:00","10:30","11:00","11:30","12:00","12:30","13:00","13:30","14:00","14:30",
+							"15:00","15:30","16:00","16:30","17:00","17:30","18:00","18:30","19:00","19:30","20:00","20:30",
+							"21:00","21:30","22:00","22:30","23:00"],
+			time_end:"",
+			Dt: null,  //必要
+
+			//Doing_info:"",
+			Nav_title:'多面的活動登録',
+			startDate_str:null,
+
+ 			//状態flg
+			pre_hoka_retu_zimu_flg:false,
+			pre_hoka_retu_tea_flg:false,
+			pre_hoka_retu_bung_flg:false,
+			pre_hoka_retu_siyou_flg:false, 
+
+			//ソート関係
+			sort: {
+		        key: 'Fkey',	//ソートキー
+		        isAsc: false	//ソート順
+			},
+
+			//地図関係
+			map: null,
+			ALLControl: null,
+			Map_BaseLayer: null,
+
+			//myGroup3:null,
+			overlays:null,
+			Tikulat:null,
+			Tikulng:null,
+			resizedImg: null,
+			blob:null,
+			phcoment:"",
+			ph_name:null
+
+		  }); //	終了 Vue.reactive
+
+//★	ソート
+		function all_result_sort(){
+		        // sort()は元の配列の中身もソートされてしまうため、deepClone	slice()で配列のコピーを作成してからソートします。
+		        let list = deepClone(Total_event);   //又は Total_event.slice()
+				let dummy = "";
+				_.each(list,function(item){
+						dummy = item[data.sort.key];//	
+ 						item[data.sort.key] =  parseFloat(dummy); //数値の設定
+				});
+
+		        // ソート実施
+			    if(data.sort.key) {
+			    	list.sort((a, b) => {
+			        	console.log(a, b)
+			        	a = a[data.sort.key];
+			        	b = b[data.sort.key];
+			        	return (a === b ? 0 : a > b ? 1 : -1) * (data.sort.isAsc ? 1 : -1);  // 降順
+			        	//return (a === b ? 0 : a < b ? 1 : -1) * (data.sort.isAsc ? 1 : -1);   昇順
+			          });
+			    }
+		        return list;
+		}
+
+//★写真関数
+		function attachImg(e){
+				//取り込み写真毎、select_json ["写真"]の詳細の初期化をする
+				data.pre_ph_retu = {
+					"name":"?",
+					"phcoment":"?",
+					"Lat":"?",
+					"Lon":"?" ,
+					"exif_flg":false ,
+					"phpath":"?",	// window.URL.createObjectURL(data.blob);	data.resizedImg	多面処理に使う　オフラインの複数写真で
+					"url":"?",  	//canvas.toDataURL(file.type)	base64の文字列データ
+			    	"Pkey": ""
+				};
+
+				const file = e.target.files[0];
+				//data.ph_name = file.name;
+ 				data.pre_ph_retu.name = file.name;
+
+				//All_output_phのkey設定
+				let New_tuika_key = String(Date.parse(new Date().toString()));
+				data.pre_ph_retu.Pkey = New_tuika_key;
+
+				let kakutyousi_s = ['jpeg', 'jpg'];
+				let type = file.name.split('.');
+				if(kakutyousi_s.indexOf(type[type.length - 1].toLowerCase()) == -1) {// 小文字にして確認
+					alert("jpegファイルでありません。\n 「jpegファイル」を選んで下さい");
+					return "";
+				}
+
+				//parseMetaDataを使うと dat.exif でExif情報が取れます
+				loadImage.parseMetaData(file, (dat) => {
+			        const options = {//maxの値をもとにリサイズ
+			          maxHeight: 200,//200
+			          maxWidth: 200,//200
+			          canvas: true
+			        };
+			    	var gpsInfo = dat.exif;
+					if ((gpsInfo) && (gpsInfo.get('GPSLatitude'))) {
+							//dat.exifがtrueの場合の緯度、経度データの取得
+						      //alert(gpsInfo.get('GPSLatitude'));緯度	exifデータから経緯度の取得 javascript
+						      //alert(gpsInfo.get('GPSLongitude'));経度
+							//度分秒を十進に変換
+							let dummyLat = String(gpsInfo.get('GPSLatitude')).split(",");
+							let Lat = dummyLat[0]/1 + dummyLat[1]/60 + dummyLat[2]/3600;//緯度
+							let dummyLon = String(gpsInfo.get('GPSLongitude')).split(",");
+							let Lon = dummyLon[0]/1 + dummyLon[1]/60 + dummyLon[2]/3600;//経度
+
+							data.pre_ph_retu.Lat = Lat;
+							data.pre_ph_retu.Lon = Lon;
+							data.pre_ph_retu.exif_flg = true;
+  							alert("GPS情報はあります。")
+
+			        }else{ //終了dat.exif
+ 							//alert("GPS情報はないです。")
+							data.pre_ph_retu.exif_flg = false;
+					}
+
+		        displayImage(file, options);
+		      });//終了loadImage.parseMetaData
+		    }
+
+		//ファイル形式を変換	dat.exifのtrue falseの共通処理	data_url -> blob object -> blob url
+		function displayImage(file, options){
+		      loadImage(
+		        file,
+		        async (canvas) => {
+					　//1.base64の文字列データに変換する必要があります。canvas.toDataURL()
+			          let dat = canvas.toDataURL(file.type);
+
+			          //2. data_url形式をblob objectに変換	base64データをblobに変換
+			          data.blob = base64ToBlob(dat, file.type);
+
+			          //3. objectのURLを生成
+			          let url = window.URL.createObjectURL(data.blob);
+			          data.resizedImg = url;
+
+					data.pre_ph_retu.phcoment = "?";
+					data.pre_ph_retu.phpath = data.resizedImg;// window.URL.createObjectURL(data.blob);	data.resizedImg	多面処理に使う　オフラインの複数写真で
+					data.pre_ph_retu.url = dat;//canvas.toDataURL(file.type)	base64の文字列データ
+
+					All_Blob.push(data.blob);
+
+		        },
+		        options
+		      );
+		    }
+
+		function base64ToBlob(base64, fileType){
+		      const bin = atob(base64.replace(/^.*,/, ''));
+		      const buffer = new Uint8Array(bin.length);
+		      for (let i = 0; i < bin.length; i++) {
+		        buffer[i] = bin.charCodeAt(i);
+		      }
+		      return new Blob([buffer.buffer], {
+		        type: fileType ? fileType : 'image/jpg'
+		        //type: fileType ? fileType : 'image/png'
+		      });
+		    }
+
+		//写真取込	
+		//マーカーの設定
+		function ph_in_map_kakutei(){ 
+			let item = data.pre_ph_retu;
+
+				//Exif  有りの場合
+				if(data.Exif_flg){
+
+				}else{
+					data.pre_ph_retu.Lat = data.Tikulat;
+					data.pre_ph_retu.Lon = data.Tikulng;
+				}
+
+				//写真、緯度、経度等の取得
+				if(data.select_json["写真"]) {
+					data.select_json["写真"].push(data.pre_ph_retu);
+					//alert(JSON.stringify(data.All_output));
+				}else{
+					data.select_json["写真"] = [];
+					data.select_json["写真"].push(data.pre_ph_retu);
+				}
+ 			    data.resizedImg = null;
+				data.Modal_Photo_flg = false;
+			}
+
+			//写真入力へ
+			function ph_in_map_Modal(){
+				data.Modal_Photo_flg = true;
+			}
+
+			//写真入力キャンセル 入力前と入力後(resizedImg有り)の場合⇒storageに保存はしていない状態
+			function close_Modal_Photo_flg(){
+				if(data.resizedImg != null){
+					data.select_json["写真"].splice(0,1) ;
+					data.resizedImg = null;
+				}
+				data.Modal_Photo_flg = false;
+		    }
+
+			function ph_sakuzyo(idx){
+				//alert("ph_sakuzyo");
+				data.select_json['写真'].splice(idx,1) ;
+				All_Blob.splice(idx,1) ;
+				data.map.removeLayer(Markers[idx]);
+		    }
+
+			function doing_select(id){
+
+					if(id == 0){	//TOP画面
+						data.DispVal = 'TOP画面';
+					}else if(id == 1){	//日報印刷画面
+						data.DispVal = '日報印刷画面';
+						data.map.remove();
+        				data.map = null;
+						init_map01();
+						data.Markers = [];
+
+						if(data.select_json['写真']){
+							_.each(data.select_json['写真'],function(item,idx){
+								//data.pre_ph_retu = item;
+								if(item.exif_flg){
+									//alert("このマーカーは移動出来ません") ;
+							      	let phcontents = "登録No:" + idx + "<br><img src='" + item.url + 
+													"' width='300' height='200' class=''>" ;  // class='img-fluid'
+							      	let popup = L.popup({ maxWidth: 300 }).setContent(phcontents);
+									data.Markers[idx] = L.marker([item.Lat, item.Lon],
+												{icon:RedIcon,title:item.name,draggable:false}).bindPopup(popup).bindTooltip("登録No:" + idx).addTo(data.map);//  赤
+
+								}else{//Exif  無しの場合
+									//alert("この写真には、EXIF Dataがありません\n" + "このマーカーは移動出来ます。");
+				   					let phcontents = "登録No:"+ idx  + "<br><img src='" + item.url + 
+													"' width='300' height='200'  class=''>" ; // class='img-fluid'
+							      	let popup = L.popup({ maxWidth: '300' }).setContent(phcontents);
+									 data.Markers[idx] = L.marker([item.Lat, item.Lon],
+											{icon:GreenIcon,title:item.name,draggable:true}).bindPopup(popup).bindTooltip("登録No:" + idx).addTo(data.map);
+
+										//markerの移動終了を、dragend で検知し、イベント発火
+										data.Markers[idx].on('dragend', function(e) {
+											var latlng = e.target.getLatLng();
+											//alert ("緯度: " + latlng.lat);
+											//alert ("経度: " + latlng.lng);
+
+											item["Lat"] = latlng.lat;
+											item["Lon"] = latlng.lng;
+
+											//イベントの緯度、経度の取得
+											data.select_json["写真"][idx] = item;
+											//alert(JSON.stringify(data.All_output));
+										});
+								}
+							});
+
+					}
+
+						data.map.setView([data.select_json["写真"][0]["Lat"],data.select_json["写真"][0]["Lon"]], 16);
+						data.map._onResize();
+
+					}else if(id == 2){	//支払印刷画面
+						data.DispVal = '支払印刷画面';
+						siharai_kakunin();
+					}else {}
+			}
+
+			//操作案内
+			function sousa_annai(){
+				data.Modal_sousa_annai_flg = false;
+				data.Modal_sousa_annai_insatu_flg = false;
+				data.Modal_sousa_annai_siharai_flg = false;
+
+				if(data.DispVal == 'TOP画面'){	
+					data.Modal_sousa_annai_flg = true;
+				}else if(data.DispVal == '日報印刷画面'){
+					data.Modal_sousa_annai_insatu_flg = true;
+				}else if(data.DispVal == '支払印刷画面'){
+					data.Modal_sousa_annai_siharai_flg = true;
+				}else{}
+			}
+
+		//◆他関数
+				//新規tamen
+				function cat(/* いくつかの配列 */) {
+					let head = _.first(arguments);
+					if (existy(head))
+						return head.concat.apply(head, _.rest(arguments));
+					else
+						return [];
+				}
+
+				function construct(head, tail) {
+					return cat([head], _.toArray(tail));
+				}
+
+				function project(table, keys) {
+					return _.map(table, function(obj) {
+						return _.pick.apply(null, construct(obj, keys));
+					});
+				};
+
+
+				// json文字列かの 判定	https://qiita.com/wildmouse/items/5bfb14afdae09bb39f08
+				function isJson(str) {
+				    try {
+				        JSON.parse(str);
+				    } catch (e) {
+				        return false;
+				    }
+				    return true;
+				}
+
+				// javascript でのnull undefined 判定→false
+				function existy(z)
+					{return z != null};
+
+				// 値のtrue false 判定→
+				function truthy(z)
+					{return (z !== false) && existy(z)};
+
+				function deepClone(object) {
+					    var clone = _.clone(object);
+					    _.each(clone,function(value,key) {
+						      if (_.isObject(value)) {
+						      		clone[key] = deepClone(value);
+						      }
+					    });
+				    return clone;
+				}
+
+				/** モバイル端末なら true 、それ以外なら false を返す */
+				function isMobile(){
+				  let regexp = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i;
+				  return (window.navigator.userAgent.search(regexp) !== -1);
+				}
+
+				function getNowYM(){//月迄の表示
+					  let dt = new Date();
+					  let y = dt.getFullYear();
+					  let m = ("00" + (dt.getMonth()+1)).slice(-2);//末尾から2文字を取得する
+					  //let d = ("00" + dt.getDate()).slice(-2);
+					  let result = y + "-" + m;
+					  //let result = y + "-" + m + "-" + d;
+					  return result;
+				}
+
+				function getNowYMDHMU(){//ファイル保存名に使う
+					  let dt = new Date();
+					  let y = dt.getFullYear();
+					  let m = ("00" + (dt.getMonth()+1)).slice(-2);//末尾から2文字を取得する
+					  let d = ("00" + dt.getDate()).slice(-2);
+					  let h = ("00" + dt.getHours()).slice(-2);
+					  let mu = ("00" + dt.getMinutes()).slice(-2);
+					  let result = y + "-" + m + "-" + d + "-" + h + "-" + mu;
+					  return result;
+				}
+
+				//日付番号からの値の年、月、日の和暦表示
+				function getNum_TimestampYMD(stamp){
+					  //let dt = stamp;
+					  let dt = new Date(stamp);
+					  let y = dt.getFullYear();
+					  let m = ("00" + (dt.getMonth()+1)).slice(-2);//末尾から2文字を取得する
+					  let d = ("00" + dt.getDate()).slice(-2);
+					  let h = ("00" + dt.getHours()).slice(-2);
+					  let mu = ("00" + dt.getMinutes()).slice(-2);
+					  let result = y + "-" + m + "-" + d;
+					  return result;
+				}
+
+				//日付番号からの値の時間の和暦表示
+				function getNum_TimestampHMU(stamp){
+					  //let dt = stamp;
+					  let dt = new Date(stamp);
+					  let y = dt.getFullYear();
+					  let m = ("00" + (dt.getMonth()+1)).slice(-2);//末尾から2文字を取得する
+					  let d = ("00" + dt.getDate()).slice(-2);
+					  let h = ("00" + dt.getHours()).slice(-2);
+					  let mu = ("00" + dt.getMinutes()).slice(-2);
+					  let result = h + "-" + mu;
+					  return result;
+				}
+
+				//去年の起点日を求める
+				function last_nen_getNowYMD(){
+					  //"1970-01-01-00-00"
+					  let dt = new Date();
+					  let y = dt.getFullYear()-1;//昨年の西暦年を取得する
+					  let m = ("00" + (dt.getMonth())).slice(-2);//末尾から2文字を取得する
+					  let d = ("00" + dt.getDate()).slice(-2);
+					  let result = y + "-" + m + "-" + d;
+					  return Date.parse(result);//指定した文字列を解釈してUNIX時刻を返します。
+				}
+
+				  //振込依頼印刷画面の振込依頼日の作成
+				  //振込依頼印刷画面の振込依頼日の作成
+			const getWarekiYmd = Vue.computed(() => {    //◆	const 必要
+				//function getWarekiYmd(){
+				  //年号毎の開始日付
+				  let m = new Date(1868,8,8);	//1868年9月8日～
+				  let t = new Date(1912,6,30);	//1912年7月30日～
+				  let s = new Date(1926,11,25);	//1926年12月25日～
+				  let h = new Date(1989,0,8);	//1989年1月8日～
+				  let a = new Date(2019,4,1);	//2019年5月1日～
+				 
+				  //対象日付
+				  data.Dt = new Date();             //当日の場合
+				//  data.Dt = new Date(1989,0,7);   //日付指定の場合（月は-1してください）
+				 
+				  let y = data.Dt.getFullYear();
+				  let mo = ("00" + (data.Dt.getMonth()+1)).slice(-2); //※
+				  let d = ("00" + (data.Dt.getDate() + 1)).slice(-2);       //翌日※
+				  //let d = ("00" + data.Dt.getDate()).slice(-2); 
+				  //※ゼロ埋めしたくない場合は以下に置き換えてください。
+				  //let mo = data.Dt.getMonth()+1;
+				  //let d = data.Dt.getDate();
+				 
+				  let gen="";
+				  let nen=0;
+				 
+				  //元号判定
+				  if(m<=data.Dt && data.Dt<t){
+				    gen = "明治";
+				    nen = (y - m.getFullYear())+1;
+				  }else if(t<=data.Dt && data.Dt<s){
+				    gen = "大正";
+				    nen = (y - t.getFullYear())+1;
+				  }else if(s<=data.Dt && data.Dt<h){
+				    gen = "昭和";
+				    nen = (y - s.getFullYear())+1;
+				  }else if(h<=data.Dt && data.Dt<a){
+				    gen = "平成";
+				    nen = (y - h.getFullYear())+1;
+				  }else if(a<=data.Dt){
+				    gen = "令和";    //★新元号が確定したら置き換えてください。
+				    nen = (y - a.getFullYear())+1;
+				  }else{
+				    gen = "";
+				  }
+				 
+				  //1年の場合は"元"に置き換え
+				  if(nen == 1){
+				    nen = "元";
+				  }
+				 
+				  //日付生成
+				  let result = gen + nen + "年" + mo + "月" + d + "日";
+				 
+				  return result;
+
+		        //}
+
+			});
+
+		//★	新規tamen
+				function select_kasidasiki(dat){//
+						if((data.select_json["時間"]) && (data.new_names.length>0)){
+							data.pre_kasidasi_retu = {"人":"","内容":"","分類":"購入・リース費",
+											"日付":data.select_json["日付"],"始時":data.select_json["始時"],"終時":data.select_json["終時"]};
+									data.pre_kasidasi_retu["内容"] = dat;
+									data.KasidasikiMan_flg = true;
+						}else{
+							alert("開始時、終了時、作業者を登録して下さい。");
+							return ;
+						}
+				}
+
+				function select_hoka(dat){//
+						data.pre_hoka_retu = {"人":"","内容":"","分類":"その他",
+										"日付":"","始時":"","終時":"","時間":"","金額": ""};
+								data.pre_hoka_retu["内容"] = dat;
+								switch(dat){
+									case "事務処理":
+										data.pre_hoka_retu_zimu_flg = true;//事務処理の場合、事務処理の日付modalを開く
+										break;
+									case "お茶代":
+										data.pre_hoka_retu_tea_flg = true;//お茶代の場合、お茶代の入力modalを開く
+										break;
+									case "文具費":
+										data.pre_hoka_retu_bung_flg = true;//文具費の場合、文具費の入力modalを開く
+										break;
+									default:
+								}
+				}
+
+					function hokaman_select(item){
+							if(parseFloat(data.pre_hoka_retu["金額"])>0){
+								data.pre_hoka_retu["人"] = item;
+								data.hoka_retu.push(data.pre_hoka_retu);
+								data.select_json["その他"] = data.hoka_retu;
+								data.pre_hoka_retu_tea_flg = false;
+								data.pre_hoka_retu_bung_flg = false;
+								data.pre_hoka_retu_siyou_flg = false;
+								data.Hokalist_flg = true;
+							}else{
+								alert("金額を登録して下さい。");
+								return ;
+							}
+				    }
+
+					function hokaman_select_zimu(item){
+							let times = zimutime();
+							if(times>0){
+									data.pre_hoka_retu["人"] = item;
+									if(Number(times) > 0){
+										 data.pre_hoka_retu["時間"] = String(times);
+										 data.pre_hoka_retu["金額"] = data.tanka_nittou * parseFloat(times);
+										 //data.pre_hoka_retu["金額"] = String(data.tanka_nittou * parseFloat(times));
+									}
+									data.hoka_retu.push(data.pre_hoka_retu);   // data.hoka_retu  は更新時に設定の事
+									data.select_json["その他"] = data.hoka_retu;
+									data.pre_hoka_retu_zimu_flg = false;
+									data.Hokalist_flg = true;
+							}else{
+								alert("開始時、終了時を登録して下さい。");
+								return ;
+							}
+				    }
+
+					function remove_hoka(i){
+				      		data.hoka_retu.splice(i,1);
+							data.select_json["その他"] = data.hoka_retu;
+				    }
+
+					function diaplay_name(){//
+						if(data.Namelist_flg){
+							data.Namelist_flg = false;
+						}else{
+							data.Namelist_flg = true;
+						}
+				    }
+
+					function remove_kasidasi(i){
+				      		data.kasidasi_retu.splice(i,1);
+							data.select_json["貸出機"] = data.kasidasi_retu;
+				    }
+
+					function kasidasikiman_select(item){
+							data.pre_kasidasi_retu["人"] = item;
+							if(data.pre_kasidasi_retu["内容"] == "軽トラック"){
+								data.pre_kasidasi_retu["金額"] = data.tanka_keitora * parseFloat(data.select_json["時間"]);
+							}else{
+								data.pre_kasidasi_retu["金額"] = data.tanka_kasidasi * parseFloat(data.select_json["時間"]);
+							};
+
+							data.kasidasi_retu.push(data.pre_kasidasi_retu);
+							data.select_json["貸出機"] = data.kasidasi_retu;
+							data.KasidasikiMan_flg = false;
+							data.Kasidasilist_flg = true;
+				    }
+
+					function close_event_kikan(){
+						data.Modal_Event_kikan_flg = false;
+		            }
+
+
+					//支払いデータの作成
+					function siharai_kakunin(){
+						//◆"日当"データの作成
+								data.pay_list = [];//初めに、支払データを初期化する
+								if(data.select_json["人"]){
+									for (let i = 0; i < data.select_json["人"].length; i++) {
+										obj={"人":"","内容":"","分類":"","日付":"","始時":"","終時":"","金額":"","Fkey":""};
+										obj["人"] = data.select_json["人"][i];
+										obj["内容"] = data.select_json["内容"];//"実践活動"等
+										obj["分類"] = "日当"
+										obj["日付"] = data.select_json["日付"];
+										obj["始時"] = data.select_json["始時"];
+										obj["終時"] = data.select_json["終時"];
+										obj["時間"] = data.select_json["時間"];
+										obj["金額"] = data.tanka_nittou*parseFloat(obj["時間"]);
+										data.pay_list.push(obj);
+									}
+								}
+
+								//◆"貸出機"データがあれば、"貸出機"データの作成
+								if(data.kasidasi_retu){
+									let obj_kasidasi = {};
+									let tanka = 0;
+									for (let r = 0; r < data.kasidasi_retu.length; r++) {
+										obj_kasidasi = {"人":"","内容":"","分類":"","日付":"","始時":"","終時":"","金額":"","Fkey":""};
+										obj_kasidasi["人"] = data.kasidasi_retu[r]["人"];
+										obj_kasidasi["内容"] = data.kasidasi_retu[r]["内容"];//草刈機
+										obj_kasidasi["分類"] = data.kasidasi_retu[r]["分類"];//"購入・リース費"
+										obj_kasidasi["日付"] = data.select_json["日付"];
+										obj_kasidasi["始時"] = data.select_json["始時"];
+										obj_kasidasi["終時"] = data.select_json["終時"];
+										obj_kasidasi["時間"] = data.select_json["時間"];
+										obj_kasidasi["金額"] = data.kasidasi_retu[r]["金額"];//金額
+										data.pay_list.push(obj_kasidasi);
+									}
+								}
+
+								//◆その他データがあれば、"その他"データの作成
+								if(data.hoka_retu){
+									let obj_hoka = {};
+									for (let i = 0; i <data.hoka_retu.length; i++) {
+										obj_hoka = {"人":"","内容":"","分類":"","日付":"","始時":"","終時":"","金額":"","Fkey":""};
+										obj_hoka["人"] = data.hoka_retu[i]["人"];
+										obj_hoka["内容"] = data.hoka_retu[i]["内容"];//事務処理,お茶代,文具費,交通費,会場使用料
+										obj_hoka["分類"] = data.hoka_retu[i]["分類"];//"その他"
+										obj_hoka["日付"] = data.hoka_retu[i]["日付"];
+										obj_hoka["始時"] = data.hoka_retu[i]["始時"];
+										obj_hoka["終時"] = data.hoka_retu[i]["終時"];
+										obj_hoka["時間"] = data.hoka_retu[i]["時間"];
+										obj_hoka["金額"] = data.hoka_retu[i]["金額"];
+										data.pay_list.push(obj_hoka);
+									}
+								}
+
+								//◆支払データ並び変え
+								if(data.pay_list){
+									//◆支払データを人毎に並び変える
+									data.pay_list.sort((a, b) => {
+										if(a["人"] < b["人"]) return -1;
+										if(a["人"] > b["人"]) return  1;
+										// 同一値なら 0 を返す
+										return 0;
+									});
+								}else{
+									alert("支払データは、ありません。");
+									return ;
+								}
+
+								//下記は、振込の合計額の表示で使う
+								data.All_pay = data.pay_list.reduce(function (sum,item){return parseInt(sum) + parseInt(item["金額"])},0);
+								//alert(data.pay_list.reduce(function (sum,item){return parseInt(sum) + parseInt(item["金額"])},0));
+								//alert(JSON.stringify(data.pay_list));
+
+								//下記は、振込件数の表示で使う
+								let result = _.pluck(data.pay_list,"人");
+								let dummy = _(result).uniq();
+								data.furikomi_su = dummy.length;
+					}
+
+
+					function add_name(name){
+		                   let dat = name;
+							if(dat != ""){
+									// 末尾に追加
+							      	data.new_names.push(dat);
+									data.select_json["人"] = deepClone(data.new_names);
+							      	// 登録済の名前を選択ボックスに非表示にする
+								  	data.iti = _(data.names).indexOf(dat);
+								  	data.names.splice(data.iti,1);
+							}
+					}
+
+					function remove_name(i){
+		 			      	// 順番違いで登録した名前を、data.namesの末尾に追加
+							let del_name = data.new_names[i];
+		 			      	// data.namesの末尾に追加
+		 			      	data.names.push(del_name);
+
+		 			      	// new_namesから、該当する名前を削除する
+				      		data.new_names.splice(i,1);
+							data.select_json["人"] = deepClone(data.new_names);
+				    }
+
+
+					//◆保存
+					function local_save(){
+						if(!data.Kousin_flg) {//新規登録の場合
+							//重複のない値の設定 javascript
+							//Date.parse(new Date().toString()) 13桁
+							let New_tuika_key = String(Date.parse(new Date().toString()));
+							data.select_json["Fkey"] = New_tuika_key;
+							Total_event.push(data.select_json);
+							data.All_event_filter = deepClone(Total_event);
+
+							//realtime database保存
+ 							firesave(Total_event);
+								/*
+								let events = JSON.stringify(Total_event);//"Local storage"保存のため、JSON文字列にする
+								localStorage.setItem('All_event', events);
+								*/
+							alert("保存しました。");
+						}else{//更新の場合
+							let fkey = data.select_json.Fkey;
+							let pre_fkeys = _.pluck(Total_event,"Fkey");
+							let pre_index = pre_fkeys.indexOf(fkey);
+
+							Total_event[pre_index] = data.select_json;
+
+ 							//realtime database保存
+ 							firesave(Total_event);
+								/*
+								let events = JSON.stringify(Total_event);//"Local storage"保存のため、JSON文字列にする
+								localStorage.setItem('All_event', events);
+								*/
+							alert("更新しました。");
+						}//終了	ローカルの場合
+				    }
+
+					function sakuzyo_event(item,idx){
+							let fkey = item.Fkey;
+							let pre_fkeys = _.pluck(Total_event,"Fkey");
+							let pre_index = pre_fkeys.indexOf(fkey);
+							Total_event.splice(pre_index,1);
+
+							data.All_event_filter = deepClone(Total_event);
+
+							//realtime database保存
+							firesave(Total_event);
+							/*
+							let events = JSON.stringify(Total_event);
+							localStorage.setItem('All_event', events);
+							*/
+							// data.All_event_filter = all_result_sort();	◆sort
+							pre_event_list_disp();//作業履歴の一覧表の更新	data.All_event_filterの更新
+				    }
+
+					function kousin_event(item,idx){
+							data.select_json = data.All_event_filter[idx]
+							data.new_names = data.select_json["人"];
+							data.names = _(data.Names_org).difference(data.new_names);//存在しない配列を返す
+							data.names = _(data.names).uniq();//配列内の重複を除く
+							//alert(JSON.stringify(data.names));	
+		/*
+							data.names = _.without(data.Names_org,data.new_names);//_.without内はリストでなければ、ならない。
+							data.names = _(data.Names_org).without(data.new_names);//_.without内はリストでなければ、ならない。
+		*/
+							if(data.select_json["貸出機"]){
+										data.kasidasi_retu = data.select_json["貸出機"];
+							}else{data.kasidasi_retu = [];}
+
+							if(data.select_json["その他"]){
+										data.hoka_retu = data.select_json["その他"];
+							}else{data.hoka_retu = [];}
+
+							//◆状態flgの設定
+							data.Disp_event_flg = false;//アコーディオンflg
+							data.Kousin_flg = true;//更新flg
+							data.Namelist_flg = true;
+							if(data.kasidasi_retu){
+								data.Kasidasilist_flg = true;
+							}
+							if(data.hoka_retu){
+								data.Hokalist_flg = true;
+							}
+							if(data.select_json['写真']){
+								data.Ph_kousin_flg = true;
+							}
+
+							data.DispVal = 'TOP画面';
+				    }
+
+					//読み込み	作業履歴一覧の場合
+					function torikomi_event_server(){
+						let dummy = "";
+						let pre_All_output = [];
+						let pre_key = "";
+						let events  = [];
+
+						get(child(dbRef, 'tamen_tomosue_eventF/tomosue_events')).then((snapshot) => {
+							if (snapshot.exists()) {
+							 	snapshot.forEach(function(dat){
+									dummy = dat.val();
+									pre_All_output.push(dummy);
+								});
+
+								data.All_event_filter  = deepClone(pre_All_output);	
+								Total_event = deepClone(data.All_event_filter);
+									//alert("Total_event確認");
+									//alert(JSON.stringify(Total_event));
+								//data.All_event_filter = all_result_sort() ;   ◆sort
+									//alert("data.All_event_filter確認");
+									//alert(JSON.stringify(data.All_event_filter));
+							} else {
+							    alert('作業履歴データはありません。');
+							}
+
+						}).catch((error) => {
+						      console.error(error)
+						})
+
+	/*
+						if (localStorage.getItem('tamen_tomosue_event')) {
+							try {
+							    let events = JSON.parse(localStorage.getItem('tamen_tomosue_event'));//
+								//フォルダーに連動したKeyとデータの設定
+
+							    let out_db = JSON.parse(localStorage.getItem('tamen_tomosue_event'));//
+
+								//alert("tamen_tomosue_meiboF書き出し");
+								set(ref(db, 'tamen_tomosue_meiboF'), {   //  フォルダー名   RirekiF
+								    tomosue_meibos     // key名とデータ
+								});
+
+								//alert(JSON.stringify(tomosue_meibos));
+								data.All_event_filter = deepClone(events);
+								Total_event = deepClone(events);
+								//data.All_event_filter = all_result_sort(); ◆sort
+							} catch(e) {
+							    //localStorage.removeItem('tamen_tomosue_event');
+								alert('作業履歴データはありません。');
+								return ;
+							}
+						}else{
+								alert('作業履歴データはありません。');
+						}
+	*/
+		            }
+
+					//TOP画面の作業履歴の一覧表示のflg
+					function event_list_disp(){
+						//data.Disp_event_flgのトグル処理
+						if(data.Disp_event_flg){
+							data.Disp_event_flg = false;
+						}else{data.Disp_event_flg = true;
+						}
+		            }
+
+					//削除処理で必要	function sakuzyo_event
+					function pre_event_list_disp(){
+						if((data.All_event_filter.length>0) && (data.startDate_str)){
+							data.Disp_event_flg = false;
+							let startDate_str_after = data.startDate_str;
+							//let startDate = new Date(startDate_str_after);
+							//alert(Date.parse("2020-06-11"));1591833600000
+							//alert(startDate);
+							//alert(Date.parse(startDate_str_after));
+
+							let eventDate_str = "";
+							let eventDate = "";
+							let split_s = "";
+							data.All_event_filter = _(Total_event).filter(function(item){
+									eventDate_str = item["日付"];
+									//eventDate_str = "2020-06-10";1591747200000	
+									//eventDate_str = "2020-06-11";1591833600000
+									//区切った文字列を分割し個別の配列に格納
+									split_s = eventDate_str.split('-');	//→[2020,06,09]
+									eventDate_str = split_s[0] + '-' + split_s[1] + '-' + split_s[2];
+									return Date.parse(eventDate_str) >= Date.parse(startDate_str_after);
+							});
+							data.Disp_event_flg = true;
+							//alert(JSON.stringify(data.All_event_filter));
+						}
+		            }
+
+					//事務作業時間の自動取得	例の時間表示の文字列を:で区分し、配列にする
+					function zimutime(){
+						let taimusu = 0;
+						if(data.pre_hoka_retu["始時"] != "" && data.pre_hoka_retu["終時"] != ""){
+							let start = 0;
+							let end = 0;
+							let start_aray = data.pre_hoka_retu["始時"].split(':');//[07,30]
+
+							if(start_aray[1] == "30"){start = parseFloat(start_aray[0])+0.5;
+							}else{start = parseFloat(start_aray[0])};
+
+							let end_aray = data.pre_hoka_retu["終時"].split(':');//[07,30]
+
+							if(end_aray[1] == "30"){end = parseFloat(end_aray[0])+0.5;
+							}else{end = parseFloat(end_aray[0])};
+
+							taimusu = end-start;
+						}else{taimusu = 0;}
+						return String(taimusu);
+		            }
+
+
+					//作業データの自動取得	
+				    Vue.watch(function() {
+							if(data.startDate_str){
+								data.Disp_event_flg = false;
+								let startDate_str_after = data.startDate_str;
+								//let startDate = new Date(startDate_str_after);
+								//alert(Date.parse("2020-06-11"));1591833600000
+								//alert(startDate);
+								//alert(Date.parse(startDate_str_after));
+
+								let eventDate_str = "";
+								let eventDate = "";
+								let split_s = "";
+								data.All_event_filter = _(Total_event).filter(function(item){
+										eventDate_str = item["日付"];
+										//eventDate_str = "2020-06-10";1591747200000	
+										//eventDate_str = "2020-06-11";1591833600000
+										//区切った文字列を分割し個別の配列に格納
+										split_s = eventDate_str.split('-');	//→[2020,06,09]
+										eventDate_str = split_s[0] + '-' + split_s[1] + '-' + split_s[2];
+										return Date.parse(eventDate_str) >= Date.parse(startDate_str_after);
+								});
+								data.Disp_event_flg = true;
+								//alert(JSON.stringify(data.All_event_filter));
+							}
+				    })
+
+					//作業時間の自動取得	例の時間表示の文字列を:で区分し、配列にする
+				    Vue.watch(function() {
+							if(data.select_json["始時"] != "" && data.select_json["終時"] != ""){
+								let start = 0;
+								let end = 0;
+								let taimusu = 0;
+								let start_aray = data.select_json["始時"].split(':');//[07,30]
+
+								if(start_aray[1] == "30"){start = parseFloat(start_aray[0])+0.5;
+								}else{start = parseFloat(start_aray[0])};
+
+								let end_aray = data.select_json["終時"].split(':');//[07,30]
+
+								if(end_aray[1] == "30"){end = parseFloat(end_aray[0])+0.5;
+								}else{end = parseFloat(end_aray[0])};
+
+								taimusu = end-start;
+								data.select_json["時間"] = String(taimusu);
+							}
+			        })
+
+
+	/*
+		Vue.computed(() => {　のサンプル
+			computed_names = Vue.computed(() => {
+				if(data.remove_name == ""){
+
+				}else{
+					data.remove_name = "";
+					return data.names;}
+	        })
+
+	*/
+					//realtime database保存
+					function firesave(events){   // eventsは Total_eventである
+								//フォルダーに連動したKeyとデータの設定
+								let tomosue_events = deepClone(events);
+
+								//alert("tamen_tomosue_eventF書き出し");
+								set(ref(db, 'tamen_tomosue_eventF'), {   //  フォルダー名   tamen_tomosue_eventF
+								    tomosue_events     // key名とデータ
+								});
+				    }
+
+
+					//支払いデータのexcel保存処理
+					function siharai_excel_save(){
+								let file_name = "";
+								//alert(JSON.stringify(data.pay_list));
+								//出力列の設定
+								let dummy_keys = ["人","日付","時間","分類","内容","金額"]//注意	◆event出力のexcelの１行目の登録
+								let pre_titles = deepClone(dummy_keys);//　　
+
+								if(data.pay_list){//オブジェクトの行数があれば
+										//aoa_to_sheetへの書き出し用の変数の設定
+								        let createXLSLFormatObj = [];//全行の出力配列データの初期化
+								        let innerRowData = [];//各行の出力配列データの初期化
+
+									    createXLSLFormatObj.push([data.KumiaiName,data.select_json["日付"],"","","",""]);
+			 						    createXLSLFormatObj.push(["　","","","","",""]);
+
+										//excelの１行目のタイトル行の出力データの設定
+				        				createXLSLFormatObj.push(pre_titles);//1行目の設定
+
+										//excelのデータ行の出力データの設定
+								        $.each(data.pay_list,function(index,item) {
+								            	innerRowData = [];//各レコードの初期化
+												innerRowData = pre_titles.map(function(x){//出力順に生成
+														if (x == "内容") {
+															if (item["内容"] == "事務処理") {
+																item["金額"] = Number(item["金額"]);
+															}else{}
+															
+														}else{}
+														return item[x];
+
+														//return item[x];
+												});
+												//④各レコードをexcel出力用の配列に追加
+									            createXLSLFormatObj.push(innerRowData);
+								        });
+									    createXLSLFormatObj.push(["","","","合計","",Number(data.All_pay)]);
+									 //createXLSLFormatObj.push(["","","","合計","",String(Number(data.All_pay)).replace( /(\d)(?=(\d\d\d)+(?!\d))/g, '$1,' )]);
+
+									    createXLSLFormatObj.push(["　","","","","",""]);
+									    createXLSLFormatObj.push(["","振込件数",String(Number(data.furikomi_su)),"振込単価"+ String(Number(data.furikomi_tanka)) +"円","",Number(data.furikomi_tanka*data.furikomi_su)]);
+									 //createXLSLFormatObj.push(["","振込件数",String(Number(data.furikomi_su)),"振込単価"+ String(Number(data.furikomi_tanka)) +"円","",String(Number(data.furikomi_tanka*data.furikomi_su)).replace( /(\d)(?=(\d\d\d)+(?!\d))/g, '$1,' )]);
+									    createXLSLFormatObj.push(["　","","","","",""]);
+									    createXLSLFormatObj.push(["","","","振込額","（除く振込手数料）",Number(data.All_pay)]);
+									 //createXLSLFormatObj.push(["","","","振込額","（除く振込手数料）",String(Number(data.All_pay)).replace( /(\d)(?=(\d\d\d)+(?!\d))/g, '$1,' )]);
+
+										//ワークシート用データの作成 sheet.jsの活用     data.KumiaiName
+										let ws_data = createXLSLFormatObj;
+										alert("支払いデータを、ダウンロードします");
+										file_name = data.KumiaiName + "_siharai_"  + getNowYMDHMU() + ".xlsx";
+
+										let wb = XLSX.utils.book_new();
+										wb.SheetNames[0] = 'Sheet1';//シート名の設定。呼び出しにも使っている
+										//配列データをワークシート用データに変換
+										let ws = XLSX.utils.aoa_to_sheet(ws_data);
+										wb.Sheets["Sheet1"] = ws;//該当シートにデータを設定
+										let wbout = XLSX.write(wb,{bookType:'xlsx',type: 'binary'});//xlsx用にデータを書き込む
+										saveAs(new Blob([s2ab(wbout)], {type: 'application/octet-stream'}),file_name);
+
+								} else { alert("データが無いです");}
+
+					}//終了	siharai_excel_save
+
+					function s2ab(s){
+							let buf = new ArrayBuffer(s.length);//arrayBufferバイナリデータをオクテットに変換
+							let view = new Uint8Array(buf);//UInt8Arrayバイナリデータをオクテットに変換
+							for (let m = 0; m != s.length; ++m) {
+								view[m] = s.charCodeAt(m) & 0xFF;
+							}
+							return buf;
+					}
+
+					function init_map01(){
+								const t_ort = new L.tileLayer('http://cyberjapandata.gsi.go.jp/xyz/ort/{z}/{x}/{y}.jpg', {
+									minZoom:5,maxZoom:18,
+								    attribution: "<a href='http://www.gsi.go.jp/kikakuchousei/kikakuchousei40182.html' target='_blank'>国土地理院</a>"});
+								const Esri = L.tileLayer('http://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}', {
+										attribution: 'Tiles &copy; <a href="http://www.esrij.com/"> Esri Japan </a>'});
+						        data.map = new L.Map('map',{layers: [t_ort], center: new L.LatLng(data.Tikulat,data.Tikulng), 
+ 																			//center: new L.LatLng(36.115153,136.296505)
+								zoom:16,zoomDelta:2,zoomControl:false,scrollWheelZoom:true,preferCanvas:true});//preferCanvas:true	友末zoomDelta:2
+								data.Map_BaseLayer = {"地理院地図 航空写真":t_ort,"Esri World":Esri};
+								data.ALLControl = L.control.layers(data.Map_BaseLayer,null,{collapsed:true}).addTo(data.map);
+								data.map._onResize();
+					}//終了 init_map01()
+
+				    // Create Mount
+				    Vue.onMounted(function() {	//onMounted
+
+						// モバイルの判断
+						data.Mobile_flg = isMobile();
+
+						let dummy = "";
+						let pre_key = "";
+						let dat_Names = [];
+
+						//マスターデータ（名簿等）の読み込み
+						get(child(dbRef, 'tamen_tomosue_meiboF/tomosue_meibos')).then((snapshot) => {
+							if (snapshot.exists()) {
+							 	snapshot.forEach(function(dat){
+									pre_key = dat.key
+									dummy = dat.val();
+									dat_Names.push(dummy.Name);
+									if(dummy.TikuName) data.TikuName = dummy.TikuName;
+									if(dummy.KumiaiName) data.KumiaiName = dummy.KumiaiName;
+									dummy.key = pre_key;
+								});
+				            	data.Names_org  = dat_Names;
+
+								data.names = deepClone(data.Names_org);
+								data.menyu_names = data.Doing_kubuns.map(function(x){
+										return x.name;
+								});
+
+								//alert(JSON.stringify(dat_Names));
+								//alert(JSON.stringify(data.menyu_names));
+								//alert(data.TikuName)
+
+								getLatLng("福井県"+ data.TikuName, (result) => {
+									data.Tikulat = result.lat;   //36
+									data.Tikulng = result.lng;   //136
+								});
+								//全履歴データの読み込み
+								torikomi_event_server();
+								init_map01();
+								data.DispVal = 'TOP画面';
+							} else {
+							    alert('名簿データはありません。');
+							}
+
+						}).catch((error) => {
+						      console.error(error)
+						})
+
+/*
+						if (localStorage.getItem('ALL_Meibo')) {
+							try {
+								//localStorageのexcelの読み込み
+								let dummy_db = [];
+								dummy_db = JSON.parse(localStorage.getItem('tamen_tomosue_meibo'));//
+								//alert(JSON.stringify(dummy_db));
+				            	data.TikuName  = dummy_db[0].TikuName;
+
+								getLatLng("福井県"+ data.TikuName, (result) => {
+									data.Tikulat = result.lat;   //36
+									data.Tikulng = result.lng;   //136
+								});
+
+								let dat_Names = [];
+								_.each(dummy_db,function(item,index){//い
+									dat_Names.push(item.Name);	
+								});//終了　_.each
+				            	data.Names_org  = dat_Names;
+
+								data.names = deepClone(data.Names_org);
+
+								data.menyu_names = data.Doing_kubuns.map(function(x){
+										return x.name;
+								});
+
+								//フォルダーに連動したKeyとデータの設定
+								let tomosue_meibos = deepClone(dummy_db);
+
+								//alert("tamen_tomosue_meiboF　書き出し");
+								//alert(JSON.stringify(dat_Names));
+								//名前書き出し
+								set(ref(db,'tamen_tomosue_meiboF'), {   //  フォルダー名   , 'tamen_tomosue_meiboF'
+								    tomosue_meibos       // key名とデータ
+								});
+
+								//全履歴データの読み込み
+								torikomi_event_server();
+								init_map01();
+								data.DispVal = 'TOP画面';
+							} catch(e) {
+								alert('名簿データはありません。');
+								return ;
+							}
+						}else{
+								alert('名簿データはありません。');
+								return ;
+						}
+*/
+
+				    })
+
+			    	return {
+					//テンプレートでの直接使用
+						data,
+						doing_select,event_list_disp,kousin_event,sakuzyo_event,close_event_kikan,getWarekiYmd,
+
+						diaplay_name,add_name,remove_name,
+
+						select_kasidasiki,remove_kasidasi,kasidasikiman_select,
+						select_hoka,remove_hoka,hokaman_select,hokaman_select_zimu,siharai_excel_save,
+
+						local_save,sousa_annai,
+						ph_sakuzyo,ph_in_map_Modal,ph_in_map_kakutei,close_Modal_Photo_flg,attachImg
+
+			    	};  
+    	
+			}//終了setup
+
+		}).mount("#app");
+
+	</script>
+
+</body>  <!--終了 id="app"-->
+</html>
+
+
+
